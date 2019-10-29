@@ -1,0 +1,88 @@
+.form-add{
+    width: 380px;
+    height: auto;
+}
+
+.form-add-project{
+    display: flex;
+    width: auto;
+    margin-bottom: -10px;
+    margin-left: 20px;
+}
+
+.img-add-project{
+    width: 50px;
+    height: 20px;
+}
+
+.img-add-project img{
+    width: 100%;
+    height: auto;
+}
+
+.content-add-project{
+    margin-top: 7px;
+    margin-left: 10px;
+}
+
+.input-project-name::placeholder{
+    background-image: url('../resources/icons/label.png');
+    background-size: 13px;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-position-x: 3px;
+    padding-left: 20px;
+}
+
+.input-type::placeholder{
+    background-image: url('../resources/icons/project-type.png');
+    background-size: 13px;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-position-x: 3px;
+    padding-left: 20px;
+}
+
+.input-invite::placeholder{
+    background-image: url('../resources/icons/project-invite.png');
+    background-size: 13px;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-position-x: 3px;
+    padding-left: 20px;
+}
+
+.form-content-project{
+    display: flex;
+    margin-left: 20px;
+}
+
+.form-label{
+    width: 100px;
+    height: 100px;
+    text-align: right;
+    margin-top: 20px;
+    margin-left: -3px;
+}
+
+.form-label label{
+    margin-bottom: 10px;
+}
+
+.form-input{
+    margin-top: 20px;
+    margin-left: 20px;
+    width: 100px;
+    height: auto;
+}
+
+.form-button{
+    display: flex;
+    margin: 2px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.button-play{
+    margin-right: 10px;
+}

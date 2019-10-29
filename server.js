@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 var mysqlConnection = mysql.createConnection(
   {
-    host: '192.168.0.117',
+    host: 'localhost',
     user: 'balloon',
     password: 'balloon',
     database: 'balloonDB'

@@ -1,0 +1,27 @@
+.top-form{
+    width: auto;
+    height: 100px;
+    background-color: aqua;
+    text-align: flex;
+}
+
+.img-add-project{
+    width: 50px;
+    height: 20px;
+}
+
+.img-add-project img{
+    width: 100%;
+    height: auto;
+}
+
+.top-form-setting{
+    float: right;
+    margin-right: 20px;
+}
+
+.top-form-setting img{
+    width: 60px;
+    height: 60px;
+    margin-top: 20px;
+}
