@@ -1,0 +1,22 @@
+{
+  "name": "reactexpress",
+  "version": "1.0.0",
+  "description": "Starter kit for creating React/Redux and Express apps",
+  "main": "server.js",
+  "scripts": {
+    "client-install": "cd client && npm install",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Brad Traversy & Gregory Assasie",
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "concurrently": "^4.1.1",
+    "express": "^4.17.1",
+    "mysql": "^2.17.1",
+    "nodemon": "^1.19.1"
+  }
+}
