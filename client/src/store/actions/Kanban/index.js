@@ -1,0 +1,1 @@
+export const GET_KANBANLIST = "GET_KANBANLIST";
