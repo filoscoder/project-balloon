@@ -8,6 +8,7 @@ import { get_kanbanList } from '../../store/actions/Kanban/kanbanList'
 const ListContainer = styled.div`
     display: flex;
     flex-direction: row;
+//    float : right;
 `;
 
 
@@ -19,7 +20,7 @@ class KanbanFull extends Component {
 
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.props.get_kanbanList();
     }
 
@@ -29,7 +30,7 @@ class KanbanFull extends Component {
         return (
             <ListContainer>
                 {kanbans.map((kanban, index) =>
-                    <KanbanList listID={kanban.id} key={kanban.id} category={kanban.category} cards={kanban.cards} index={index}></KanbanList>
+                    <KanbanList listID={kanban.id} key={kanban.id} category={kanban.category} cards={kanban.cards} index={index} project_id={this.props.project_id}></KanbanList>
                 )}
 
 
@@ -45,7 +46,7 @@ const mapStateToProps = state => ({
 
 
 const dispatchToProps = (dispatch) => ({
-    get_kanbanList: () => dispatch(get_kanbanList()),
+    get_kanbanList: () => dispatch(get_kanbanList('201911031025-2')),
 
 })
 

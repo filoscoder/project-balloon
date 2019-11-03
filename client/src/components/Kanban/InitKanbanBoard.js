@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import './InitKanbanBoard.css'
-import TopKanbanBoard from './TopKanbanBoard';
 import Logo from '../resources/icons/logo.png'
 import Project from '../resources/icons/project.png'
 import AddKanbanBoard from './AddKanbanBoard';
 
 class InitKanbanBoard extends Component {
+
+
+
     render() {
         return (
             <div>
-                <TopKanbanBoard />
+
 
                 <div className="form">
 

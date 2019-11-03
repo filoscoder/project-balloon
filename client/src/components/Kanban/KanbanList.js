@@ -8,6 +8,7 @@ import Card from '@material-ui/core/Card'
 import Button from '@material-ui/core/Button'
 
 
+
 const ListContainer = styled.div`
 background-color: #dfe3e6;
 border-radius: 8px;
@@ -16,17 +17,17 @@ padding: 8px;
 margin-right: 8px;
 height: 100%;
 `
-
-const headerContainer = styled.div`
-flex-direction: row;
-`
+// material UI 스타일 정의
 const styles = {
+
+    // Card 추가 버튼 관련
     addIcon: {
         display: 'inline-block',
         textAlign: 'right',
         paddingTop: 30,
         paddingBottom: 30
     },
+    //ADD CARD, CANCEL 버튼 관련
     formButtonGroup:
     {
         marginTop: 8,
@@ -40,10 +41,14 @@ const styles = {
 
 
 class KanbanList extends Component {
+
+    //초기 state
     state = {
         text: '',
         formOpen: false,
     }
+
+    //추가 form render 상태 옵션
     openForm = () => {
         this.setState({
             formOpen: true,
@@ -56,12 +61,34 @@ class KanbanList extends Component {
         })
     }
 
+    //text창에 글씨 입력될때마다 text value값 변경.
     handleInputChange = (e) => {
         this.setState({
             text: e.target.value
         })
     }
 
+    //ADD CARD 버튼 눌렀을때.
+    handleAddCard = () => {
+
+        console.log("=>handleAddCard 호출")
+        console.log("=>handleAddCard ", this.props)
+        const { dispatch, listID } = this.props;
+        console.log(dispatch, listID)
+        const text = this.state.text;
+        console.log("=>handleAddCard ", text)
+
+
+        if (text) {
+            this.setState({
+                text: ""
+            })
+            //dispatch(addCard(listID, text))
+        }
+    }
+
+
+    // InputFrom rendering 형식
     addInputForm = () => {
         console.log("addInputForm 호출")
         const placeholder = "Enter a title for this card..."
@@ -76,8 +103,8 @@ class KanbanList extends Component {
                 }
 
                 }>
-                    {/* onBlur={this.closeForm} */}
-                    <Textarea placeholder={placeholder} autoFocus value={this.state.text}
+
+                    <Textarea placeholder={placeholder} autoFocus onBlur={this.closeForm} value={this.state.text}
                         onChange={this.handleInputChange} style={{
                             resize: "none",
                             width: "100%", outline: "none", border: "none", overflow: "hidden"
@@ -127,6 +154,7 @@ class KanbanList extends Component {
                     {cards.map((card, index) =>
                         <KanbanCard title={card.title} id={card.id} key={index} content={card.content} />
                     )}
+
                     {newCard}
 
 

@@ -24,6 +24,7 @@ mysqlConnection.connect((err) => {
   }
 })
 
+//참고용 추후 지울것
 app.get('/api/customers', (req, res) => {
   const customers = [
     { id: 1, firstName: 'John', lastName: 'Doe' },
@@ -35,7 +36,7 @@ app.get('/api/customers', (req, res) => {
 
 });
 
-
+//참고용 추후 지우거나 수정할 것
 app.get('/members', (req, res) => {
   mysqlConnection.query('SELECT * FROM members', (err, rows, fields) => {
     if (!err) {
@@ -72,9 +73,38 @@ app.get('/members', (req, res) => {
   })
 })
 
+//DB에서 회원id가 포함된 Project List 가져오기
+app.get('/projectList/:memberid', (req, res) => {
+  mysqlConnection.query(`SELECT distinct 
+  pm.project_id as id, p.name as name , p.image_id  as image
+  from project_members as pm 
+  JOIN projects as p
+  on pm.project_id = p.id
+  where pm.member_id = ?;`
+    , [req.params.memberid], (err, rows, fields) => {
+
+      if (!err) {
+        const projects = rows
+        let projectList = []
+
+
+        projects.map(project => {
+          projectList.push(
+            { project_id: project.id, project_name: project.name, project_image: project.image })
+        })
+
+        res.json(projectList)
+        console.log(projectList)
+
+      }
+    })
+
+})
+
+
 // DB 에서 kanbanList 가져오기. 
-app.get('/kanbanList', (req, res) => {
-  mysqlConnection.query('SELECT * FROM kanbancards where project_id=?', [1], (err, rows, fields) => {
+app.get('/kanbanList/:project_id', (req, res) => {
+  mysqlConnection.query('SELECT * FROM kanbancards where project_id=?', [req.params.project_id], (err, rows, fields) => {
     if (!err) {
       let kanbans = rows
       let kanbanList = []

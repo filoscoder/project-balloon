@@ -1,1 +1,3 @@
 export const GET_KANBANLIST = "GET_KANBANLIST";
+export const ADD_CARD = "ADD_CARD";
+export const GET_PROJECTLIST = "GET_PROJECTLIST";
