@@ -106,17 +106,6 @@ class TopKanbanBoard extends Component {
 
                 <div className="top-form-project" >
 
-                    {/* <div style={styles.pjtbuttonBox} >
-                        {this.AddProjectList()}
-
-                        <div>
-                            <Avatar style={{ backgroundColor: 'pink', cursor: 'pointer', }} onClick={this.handleClickOpen} ><AddIcon /></Avatar>
-                        </div>
-
-                        <img src={Setting} alt="setting" style={styles.settingImg} />
-
-                    </div> */}
-                    {/* spacing={3} */}
                     <Grid container >
                         <Grid item xs={12} sm={6} style={styles.pjtbuttonBox} >
 
