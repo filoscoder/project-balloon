@@ -8,11 +8,12 @@ import { get_kanbanList } from '../../store/actions/Kanban/kanbanList'
 const ListContainer = styled.div`
     display: flex;
     flex-direction: row;
-//    float : right;
+    justify-content: center;
 `;
 
 
 class KanbanFull extends Component {
+
 
     static propTypes = {
         get_kanbanList: PropTypes.func.isRequired,
@@ -20,33 +21,82 @@ class KanbanFull extends Component {
 
     }
 
-    componentWillMount() {
-        this.props.get_kanbanList();
+    getTitle = (projects, project_id) => {
+        //console.log("getTitle 호출:", projects, project_id)
+        let title = null
+
+        if ((Object.keys(projects).length) > 0) {
+
+            projects.map(project => {
+                if (project.project_id === project_id) {
+                    title = project.project_name
+                }
+            })
+        }
+        return title
+
     }
 
+
+    shouldComponentUpdate(nextProps) {
+        console.log("shouldComponentUpdate=>", nextProps.project_id, this.props.project_id, nextProps.project_id === this.props.project_id)
+
+        if (nextProps.project_id !== this.props.project_id) {
+            // console.log("shouldComponentUpdate=>", nextProps, nextState)
+            this.props.get_kanbanList(nextProps.project_id);
+
+        }
+
+
+        return true;
+    }
+
+
+
+
     render() {
-        const { kanbans } = this.props
-        console.log(kanbans)
+        const { kanbans, projects, project_id } = this.props
+
+
+
+
+        console.log("KanbanFull render ==> props", kanbans, projects, project_id)
         return (
-            <ListContainer>
-                {kanbans.map((kanban, index) =>
-                    <KanbanList listID={kanban.id} key={kanban.id} category={kanban.category} cards={kanban.cards} index={index} project_id={this.props.project_id}></KanbanList>
-                )}
+            <div >
+
+                {projects ? <h1 style={{ textAlign: "center" }}>{this.getTitle(projects, project_id)}</h1> : null}
 
 
-            </ListContainer>
+                <ListContainer>
 
+                    {kanbans.map((kanban, index) =>
+                        <KanbanList listID={kanban.id} key={kanban.id} category={kanban.category} cards={kanban.cards} index={index} project_id={this.props.project_id}></KanbanList>
+                    )}
+
+
+
+                </ListContainer>
+            </div>
         )
     }
 }
 
 const mapStateToProps = state => ({
-    kanbans: state.kanbans
+    kanbans: state.kanbans,
+    projects: state.projects.projectlists,
+
+
+
+
 })
 
 
 const dispatchToProps = (dispatch) => ({
-    get_kanbanList: () => dispatch(get_kanbanList('201911031025-2')),
+
+    get_kanbanList: (project_id) => {
+        dispatch(get_kanbanList(project_id))
+        console.log("dispatch : get_kanbanList =>", project_id)
+    }
 
 })
 

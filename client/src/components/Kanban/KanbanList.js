@@ -137,28 +137,28 @@ class KanbanList extends Component {
         }
         return (
             < ListContainer >
+
+
                 <div>
-
-                    <div>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12} sm={6}>
-                                <h4 >{this.props.category}  </h4>
-                            </Grid>
-                            <Grid item xs={12} sm={6} style={styles.addIcon}>
-                                <AddCircleOutlineIcon listID={listID} onClick={this.openForm} style={{ cursor: "pointer" }} />
-                            </Grid>
-
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} sm={6}>
+                            <h4 >{this.props.category}  </h4>
+                        </Grid>
+                        <Grid item xs={12} sm={6} style={styles.addIcon}>
+                            <AddCircleOutlineIcon listID={listID} onClick={this.openForm} style={{ cursor: "pointer" }} />
                         </Grid>
 
-                    </div>
-                    {cards.map((card, index) =>
-                        <KanbanCard title={card.title} id={card.id} key={index} content={card.content} />
-                    )}
-
-                    {newCard}
-
+                    </Grid>
 
                 </div>
+                {cards.map((card, index) =>
+                    <KanbanCard title={card.title} id={card.id} key={index} content={card.content} />
+                )}
+
+                {newCard}
+
+
+
 
             </ListContainer >
 

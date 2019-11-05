@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import Project from '../resources/icons/project.png'
 import './TopAddKanbanBoard.css'
-import projectReducer from '../../store/reducers/Kanban/projectReducer';
+
 
 const styles = theme => ({
     hidden: {

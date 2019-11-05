@@ -8,6 +8,7 @@ import { connect } from "react-redux"
 
 
 
+
 class KanbanBoard extends Component {
 
   // static propTypes = {
@@ -18,21 +19,28 @@ class KanbanBoard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      project_id: this.props.projects.projectlists
+      project_id: this.props.current_pjtID
+
     }
+    console.log("****************", this.state.project_id)
+
   }
 
 
-  getAddform = () => {
+  //project List가 없는 경우, InitKanbanBoard render / 
+  //있는 경우 KanbanFull render
+  renderKanban = () => {
+
+    let KanbanBoard
     if (this.props.projects.cnt === 0) {
-      let initKanbanBoard = <InitKanbanBoard />
-      return (
-        initKanbanBoard
-      )
+      KanbanBoard = <InitKanbanBoard />
+    } else {
+      KanbanBoard = <KanbanFull project_id={this.props.projects.currentPjtId} />
     }
+    return KanbanBoard
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.get_projectList();
   }
   render() {
@@ -42,16 +50,17 @@ class KanbanBoard extends Component {
     return (
       <div>
         <TopKanbanBoard pjtList={this.props.projects.projectlists} cnt={this.props.projects.cnt} />
-        {this.getAddform()}
         <br></br>
-        <KanbanFull project_id={this.state.project_id} />
+        {this.renderKanban()}
+
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  projects: state.projects
+  projects: state.projects,
+
 })
 
 

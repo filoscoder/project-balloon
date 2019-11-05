@@ -1,40 +1,26 @@
 import React, { Component } from 'react';
-//import './TopKanbanBoard.css'
 import Setting from '../resources/icons/setting.png'
-import TopAddKanbanBoard from './TopAddKanbanBoard';
-import { makeStyles } from '@material-ui/core/styles';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
 import NewProject from '../resources/icons/new-project.png'
-import DoneIcon from '@material-ui/icons/Done';
+import { connect } from "react-redux"
+import { change_projectId } from '../../store/actions/Kanban/projectList';
+import AddIcon from '@material-ui/icons/Add';
+import Grid from '@material-ui/core/Grid';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        '& > *': {
-            margin: theme.spacing(0.5),
-        },
-    },
-}));
+
 
 const styles = {
     pjtbuttonBox: {
 
-        flexWrap: 'wrap',
-        display: 'inline-block',
-        margin: 8,
+        display: 'flex',
+        flexDirection: 'row',
+        padding: 10,
+        marginTop: 0
 
     },
 
 
-    newpjtbuttom: {
-        width: 40,
-        height: 40,
-        marginTop: 20,
-        marginLeft: 8
-    },
 
     topBar: {
         backgroundColor: '#4cc3c3',
@@ -42,14 +28,20 @@ const styles = {
     },
 
     setting: {
-        float: "right",
-        marginRight: 20,
+        textAlign: "right",
+        paddingTop: 20,
+        paddingRight: 10,
+
     },
 
     settingImg: {
         width: 40,
         height: 40,
-        marginTop: 20
+
+
+    },
+    button: {
+        backgroundColor: '#4cc3c3',
     }
 
 
@@ -63,24 +55,37 @@ class TopKanbanBoard extends Component {
         console.log("TopKanbanBoard Constructor =>", props)
     }
 
+    changeProjectId = (e) => {
+        const { dispatch } = this.props;
+        console.log(" TopKanbanBoard changeProjectID 호출 ", e.target.getAttribute('style'))
+        const project_id = e.target.getAttribute('project_id')
+        dispatch(change_projectId(project_id))
+
+
+
+    }
+
+
+
     // Project 있는 경우, Project List 뿌려주기.
-    getProjectList = () => {
+    AddProjectList = () => {
         let pjtList;
-        console.log(" TopKanbanBoard getProjectList 호출", this.props.pjtList)
+
         const projectList = this.props.pjtList
+
+        if (Object.length.projectList !== 0) {
+            console.log(" TopKanbanBoard AddProjectList 호출", typeof projectList, projectList)
+        }
+
         if (this.props.cnt > 0) {
 
             pjtList = projectList.map(project => {
                 return (
-                    <div style={styles.pjtbuttonBox} >
-                        <Chip key={project.project_id} project_id={project.project_id}
-                            avatar={<Avatar>{project.project_image}</Avatar>}
-                            label={project.project_name}
-                            clickable
-                            color="primary"
-                            // onClick={get_kanbanList}
-                            deleteIcon={<DoneIcon />}
-                        />
+                    <div project_id={project.project_id} key={project.project_id} onClick={this.changeProjectId} >
+                        <ListItemAvatar>
+                            <Avatar style={{ backgroundColor: 'pink', cursor: 'pointer', opacity: 0.7 }} project_id={project.project_id} ></Avatar>
+                        </ListItemAvatar>
+                        {project.project_name}
                     </div>
                 )
 
@@ -100,14 +105,34 @@ class TopKanbanBoard extends Component {
             <div className="top-form" style={styles.topBar}>
 
                 <div className="top-form-project" >
-                    {this.getProjectList()}
 
+                    {/* <div style={styles.pjtbuttonBox} >
+                        {this.AddProjectList()}
 
-                    <img style={styles.newpjtbuttom} src={NewProject} alt="new-project" onClick={this.handleClickOpen} />
+                        <div>
+                            <Avatar style={{ backgroundColor: 'pink', cursor: 'pointer', }} onClick={this.handleClickOpen} ><AddIcon /></Avatar>
+                        </div>
 
-                    <div style={styles.setting}>
                         <img src={Setting} alt="setting" style={styles.settingImg} />
-                    </div>
+
+                    </div> */}
+                    {/* spacing={3} */}
+                    <Grid container >
+                        <Grid item xs={12} sm={6} style={styles.pjtbuttonBox} >
+
+                            {this.AddProjectList()}
+                            {/* <img style={styles.newpjtbuttom} src={NewProject} alt="new-project" onClick={this.handleClickOpen} /> */}
+
+                            <Avatar style={{ backgroundColor: 'pink', cursor: 'pointer', }} onClick={this.handleClickOpen} ><AddIcon /></Avatar>
+
+                        </Grid>
+                        <Grid item xs={12} sm={6} style={styles.setting}>
+                            <img src={Setting} alt="setting" style={styles.settingImg} />
+                        </Grid>
+
+                    </Grid>
+
+
                 </div>
 
             </div>
@@ -115,4 +140,4 @@ class TopKanbanBoard extends Component {
     }
 }
 
-export default TopKanbanBoard;
+export default connect()(TopKanbanBoard);

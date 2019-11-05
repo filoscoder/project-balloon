@@ -42,7 +42,6 @@ class AddKanbanBoard extends Component {
 
     render() {
 
-        const { classes } = this.props;
 
         return (
             <div>

@@ -136,7 +136,7 @@ app.get('/kanbanList/:project_id', (req, res) => {
             if (!(category.includes(kanban.category))) {
               category.push(kanban.category)
 
-              console.log(index, "=>", element.category, kanban.ctegory, "=>새로운 category")
+              //console.log(index, "=>", element.category, kanban.ctegory, "=>새로운 category")
               kanbanList.push({
                 category: kanban.category,
                 id: `list-${listID}`,
@@ -167,7 +167,7 @@ app.get('/kanbanList/:project_id', (req, res) => {
 
       })
       res.json(kanbanList)
-      console.log(kanbanList)
+      // console.log(kanbanList)
     } else
       console.log(err)
 
