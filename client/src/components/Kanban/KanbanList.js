@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import Textarea from 'react-textarea-autosize'
 import Card from '@material-ui/core/Card'
 import Button from '@material-ui/core/Button'
+import { connect } from 'react-redux';
+import { get_kanbanList } from '../../store/actions/Kanban/kanbanList';
 
 
 
@@ -59,6 +61,13 @@ class KanbanList extends Component {
         this.setState({
             formOpen: false,
         })
+        const text = this.state.text;
+        if (text) {
+            this.setState({
+                text: ""
+            })
+
+        }
     }
 
     //text창에 글씨 입력될때마다 text value값 변경.
@@ -66,6 +75,43 @@ class KanbanList extends Component {
         this.setState({
             text: e.target.value
         })
+    }
+
+    // 새로운 카드 DB추가
+    addNewCard = (e) => {
+        console.log("=>addNewCard 호출 props", this.props)
+        e.preventDefault();
+        const { dispatch, category, project_id } = this.props
+
+        let data = {
+            category: category,
+            content: e.target.newCard.value,
+            project_id: project_id
+        }
+
+        if (data.content !== undefined && data.content !== null && data.content !== '') {
+            console.log(data)
+            fetch('/newCard', {
+                method: "post",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                mode: "cors",
+                body: JSON.stringify(data)
+            })
+                .then(data => console.log(data, "입력성공"))
+                .then(dispatch(get_kanbanList(project_id)))
+                .then(this.closeForm())
+
+        }
+
+
+
+
+
+
+
     }
 
     //ADD CARD 버튼 눌렀을때.
@@ -91,37 +137,40 @@ class KanbanList extends Component {
     // InputFrom rendering 형식
     addInputForm = () => {
         console.log("addInputForm 호출")
-        const placeholder = "Enter a title for this card..."
+        const placeholder = "Enter a content for this card..."
 
         return (
             <div >
-                <Card style={{
-                    overflow: "visible",
-                    minHeight: 50,
-                    minWidth: 272,
-                    padding: '6px 8px 2px'
-                }
+                <form onSubmit={this.addNewCard}>
+                    <Card style={{
+                        overflow: "visible",
+                        minHeight: 50,
+                        minWidth: 272,
+                        padding: '6px 8px 2px'
+                    }
 
-                }>
+                    }>
+                        {/* onBlur={this.closeForm} */}
+                        <Textarea placeholder={placeholder} name="newCard" autoFocus value={this.state.text}
+                            onChange={this.handleInputChange} style={{
+                                resize: "none",
+                                width: "100%", outline: "none", border: "none", overflow: "hidden"
+                            }}
+                        ></Textarea>
+                    </Card>
+                    {/* onMouseDown={this.handleAddCard} */}
+                    <div style={styles.formButtonGroup}>
+                        <Button type="submit"
 
-                    <Textarea placeholder={placeholder} autoFocus onBlur={this.closeForm} value={this.state.text}
-                        onChange={this.handleInputChange} style={{
-                            resize: "none",
-                            width: "100%", outline: "none", border: "none", overflow: "hidden"
-                        }}
-                    ></Textarea>
-                </Card>
-                <div style={styles.formButtonGroup}>
-                    <Button
-                        onMouseDown={this.handleAddCard}
-                        variant="contained" style={{
-                            color: "white", backgroundColor: "#5aac44", marginRight: 4, marginLeft: 4
-                        }}>ADD CARD</Button>
+                            variant="contained" style={{
+                                color: "white", backgroundColor: "#5aac44", marginRight: 4, marginLeft: 4
+                            }}>ADD CARD</Button>
 
-                    <Button
-                        onMouseDown={this.closeForm}
-                        variant="contained" style={{ color: "white", backgroundColor: "#f44336de", marginRight: 4, marginLeft: 4 }}>CANCEL</Button>
-                </div>
+                        <Button
+                            onMouseDown={this.closeForm}
+                            variant="contained" style={{ color: "white", backgroundColor: "#f44336de", marginRight: 4, marginLeft: 4 }}>CANCEL</Button>
+                    </div>
+                </form>
 
             </div>
         )
@@ -166,4 +215,4 @@ class KanbanList extends Component {
     }
 }
 
-export default KanbanList;
+export default connect()(KanbanList);

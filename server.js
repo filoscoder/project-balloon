@@ -5,7 +5,7 @@ const mysql = require('mysql');
 const app = express();
 
 app.use(bodyParser.json());
-
+app.use(bodyParser.urlencoded({ extended: true }));
 var mysqlConnection = mysql.createConnection(
   {
     host: 'localhost',
@@ -65,8 +65,6 @@ app.get('/members', (req, res) => {
       res.json(newState)
       console.log(newState)
 
-
-
     }
     else
       console.log(err)
@@ -115,7 +113,7 @@ app.get('/kanbanList/:project_id', (req, res) => {
       kanbans.map((kanban, index) => {
         // console.log(kanban)
         if (kanbanList.length === 0) {
-          console.log(index, "=>0일때 수행")
+          // console.log(index, "=>0일때 수행")
           kanbanList.push({
             category: kanban.category,
             id: `list-${listID}`,
@@ -176,6 +174,46 @@ app.get('/kanbanList/:project_id', (req, res) => {
 
   })
 
+})
+
+// 새로운 project 생성하기.
+app.post("/newProject", (req, res) => {
+  const body = req.body
+  console.log("server newProject==> body", body)
+  mysqlConnection.query("insert into projects(id,name,type,image_id) values (?,?,?,1) ", [body.id, body.name, body.type], (err, result) => {
+    if (!err) {
+      console.log("projects 입력 성공")
+      //res.redirect('/')
+    } else {
+      console.log(err)
+    }
+  })
+  mysqlConnection.query(" insert into project_members (member_id,project_id) values (1,?) ", [body.id], (err, result) => {
+    if (!err) {
+      console.log("project_members 입력 성공")
+      //res.redirect('/')
+    } else {
+      console.log(err)
+    }
+  })
+
+
+
+
+})
+
+// 새로운 card 입력하기
+app.post('/newCard', (req, res) => {
+  const body = req.body
+  console.log("server newCard==> body", body)
+  mysqlConnection.query("insert into kanbancards(category, content, project_id) values (?,?,?)", [body.category, body.content, body.project_id], (err, result) => {
+    if (!err) {
+      console.log("new card 입력 성공")
+      //res.redirect('/')
+    } else {
+      console.log(err)
+    }
+  })
 })
 
 

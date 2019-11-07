@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import Setting from '../resources/icons/setting.png'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import NewProject from '../resources/icons/new-project.png'
 import { connect } from "react-redux"
-import { change_projectId } from '../../store/actions/Kanban/projectList';
+import { change_projectId, add_newProject } from '../../store/actions/Kanban/projectList';
 import AddIcon from '@material-ui/icons/Add';
 import Grid from '@material-ui/core/Grid';
 
@@ -57,13 +56,48 @@ class TopKanbanBoard extends Component {
 
     changeProjectId = (e) => {
         const { dispatch } = this.props;
-        console.log(" TopKanbanBoard changeProjectID 호출 ", e.target.getAttribute('style'))
         const project_id = e.target.getAttribute('project_id')
         dispatch(change_projectId(project_id))
 
 
 
     }
+
+    //새로운 프로젝트 생성시 날짜로 ID 만들기.
+    newProjectId = () => {
+        let today = new Date()
+        let year = today.getFullYear()
+        let month = today.getMonth() + 1
+        let date = today.getDate()
+        let hour = today.getHours()
+        let min = today.getMinutes()
+        let sec = today.getSeconds()
+
+        if (month < 10) {
+            month = "0" + month
+        }
+        if (date < 10) {
+            date = "0" + date
+        }
+        if (hour < 10) {
+            hour = "0" + hour
+        }
+        if (min < 10) {
+            min = "0" + min
+        }
+
+        return (year + "" + month + "" + date + "" + hour + "" + min + "" + sec + "-" + "1")
+    }
+
+    handleClickOpen = () => {
+        const newProjectId = this.newProjectId()
+        const { dispatch } = this.props;
+
+        dispatch(add_newProject(newProjectId))
+
+    }
+
+
 
 
 
@@ -97,6 +131,7 @@ class TopKanbanBoard extends Component {
     }
 
 
+
     render() {
         console.log(">>>>>>>>>>", this.props)
 
@@ -107,7 +142,7 @@ class TopKanbanBoard extends Component {
                 <div className="top-form-project" >
 
                     <Grid container >
-                        <Grid item xs={12} sm={6} style={styles.pjtbuttonBox} >
+                        <Grid item xs={12} sm={9} style={styles.pjtbuttonBox} >
 
                             {this.AddProjectList()}
                             {/* <img style={styles.newpjtbuttom} src={NewProject} alt="new-project" onClick={this.handleClickOpen} /> */}
@@ -115,7 +150,7 @@ class TopKanbanBoard extends Component {
                             <Avatar style={{ backgroundColor: 'pink', cursor: 'pointer', }} onClick={this.handleClickOpen} ><AddIcon /></Avatar>
 
                         </Grid>
-                        <Grid item xs={12} sm={6} style={styles.setting}>
+                        <Grid item xs={12} sm={3} style={styles.setting}>
                             <img src={Setting} alt="setting" style={styles.settingImg} />
                         </Grid>
 

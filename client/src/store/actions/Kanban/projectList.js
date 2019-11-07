@@ -1,4 +1,4 @@
-import { GET_PROJECTLIST, CHANGE_PROJECTID } from './index'
+import { GET_PROJECTLIST, CHANGE_PROJECTID, ADD_NEWPROJECT, CANCEL_NEWPROJECT } from './index'
 
 
 export const get_projectList = (memberID) => dispatch => {
@@ -7,20 +7,12 @@ export const get_projectList = (memberID) => dispatch => {
         fetch(`/projectList/${memberID}`)
             .then(res => res.json())
             .then(projectlists => {
-                if (projectlists.length > 0) {
-                    dispatch({
-                        type: GET_PROJECTLIST,
-                        payload: { projectlists: projectlists, cnt: projectlists.length, currentPjtId: projectlists[0].project_id }
-                    })
-                } else {
-                    dispatch({
-                        type: GET_PROJECTLIST,
-                        payload: { projectlists: projectlists, cnt: projectlists.length }
-                    })
-                }
+                dispatch({
+                    type: GET_PROJECTLIST,
+                    payload: { projectlists: projectlists, cnt: projectlists.length, open: false }
+                })
 
             }
-
 
             )
 
@@ -28,10 +20,21 @@ export const get_projectList = (memberID) => dispatch => {
 }
 
 export const change_projectId = (currentPjtId) => {
-
-
     return (
 
         { type: CHANGE_PROJECTID, payload: currentPjtId }
     )
 }
+
+export const add_newProject = (currentPjtId) => {
+    return (
+        { type: ADD_NEWPROJECT, payload: currentPjtId }
+    )
+}
+
+export const cancel_newProject = () => {
+    return (
+        { type: CANCEL_NEWPROJECT }
+    )
+}
+

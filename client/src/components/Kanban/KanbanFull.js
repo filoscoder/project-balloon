@@ -38,39 +38,32 @@ class KanbanFull extends Component {
     }
 
 
-    shouldComponentUpdate(nextProps) {
-        console.log("shouldComponentUpdate=>", nextProps.project_id, this.props.project_id, nextProps.project_id === this.props.project_id)
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log(" KanbanFull shouldComponentUpdate=>", nextProps.project_id, this.props.project_id, nextProps.project_id === this.props.project_id, nextProps, this.props.projects.currentPjtId)
+        console.log(" KanbanFull shouldComponentUpdate=>", "nextProps:", nextProps, "nextState:", nextState)
+
 
         if (nextProps.project_id !== this.props.project_id) {
-            // console.log("shouldComponentUpdate=>", nextProps, nextState)
             this.props.get_kanbanList(nextProps.project_id);
-
         }
-
 
         return true;
     }
 
-
-
-
     render() {
         const { kanbans, projects, project_id } = this.props
-
-
-
 
         console.log("KanbanFull render ==> props", kanbans, projects, project_id)
         return (
             <div >
 
-                {projects ? <h1 style={{ textAlign: "center" }}>{this.getTitle(projects, project_id)}</h1> : null}
+                {projects.projectlists ? <h1 style={{ textAlign: "center" }}>{this.getTitle(projects.projectlists, project_id)}</h1> : null}
 
 
                 <ListContainer>
 
                     {kanbans.map((kanban, index) =>
-                        <KanbanList listID={kanban.id} key={kanban.id} category={kanban.category} cards={kanban.cards} index={index} project_id={this.props.project_id}></KanbanList>
+                        <KanbanList listId={kanban.id} key={kanban.id} category={kanban.category} cards={kanban.cards} index={index} project_id={this.props.project_id}></KanbanList>
                     )}
 
 
@@ -83,7 +76,8 @@ class KanbanFull extends Component {
 
 const mapStateToProps = state => ({
     kanbans: state.kanbans,
-    projects: state.projects.projectlists,
+    projects: state.projects,
+
 
 
 
