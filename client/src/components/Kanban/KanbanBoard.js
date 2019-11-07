@@ -21,11 +21,7 @@ class KanbanBoard extends Component {
   //project List가 없는 경우, InitKanbanBoard render / 
   //있는 경우 KanbanFull render
   renderKanban = () => {
-
-
-
     let KanbanBoard
-
 
     if (this.props.projects.cnt === 0) {
       KanbanBoard = <InitKanbanBoard />
@@ -51,6 +47,7 @@ class KanbanBoard extends Component {
     console.log("KanbanBoard render componentDidMount")
     this.props.get_projectList();
   }
+
   render() {
     const { projects } = this.props
     console.log("==>KanbanBoard render props:", projects)
@@ -74,7 +71,7 @@ const mapStateToProps = state => ({
 
 
 const dispatchToProps = (dispatch) => ({
-  get_projectList: () => dispatch(get_projectList('5')),
+  get_projectList: () => dispatch(get_projectList('1')),
 
 })
 

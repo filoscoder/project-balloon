@@ -115,9 +115,9 @@ class TopKanbanBoard extends Component {
 
             pjtList = projectList.map(project => {
                 return (
-                    <div project_id={project.project_id} key={project.project_id} onClick={this.changeProjectId} >
+                    <div project_id={project.project_id} key={project.project_id} >
                         <ListItemAvatar>
-                            <Avatar style={{ backgroundColor: 'pink', cursor: 'pointer', opacity: 0.7 }} project_id={project.project_id} ></Avatar>
+                            <Avatar style={{ backgroundColor: 'pink', cursor: 'pointer', opacity: 0.7 }} project_id={project.project_id} onClick={this.changeProjectId} ></Avatar>
                         </ListItemAvatar>
                         {project.project_name}
                     </div>

@@ -1,4 +1,4 @@
-import { GET_KANBANLIST, ADD_CARD } from './index';
+import { GET_KANBANLIST, ADD_CARD, ADD_LIST } from './index';
 
 
 export const get_kanbanList = (project_id) => dispatch => {
@@ -19,4 +19,11 @@ export const add_card = (text, listID) => dispatch => {
             payload: { text, listID }
         })
     )
+}
+
+export const add_list = (category) => {
+    return {
+        type: ADD_LIST,
+        payload: { category }
+    }
 }

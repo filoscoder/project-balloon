@@ -1,4 +1,4 @@
-import { GET_KANBANLIST, ADD_CARD } from "../../actions/Kanban";
+import { GET_KANBANLIST, ADD_LIST } from "../../actions/Kanban";
 
 const initailState = [{
     category: "No List yet",
@@ -13,7 +13,7 @@ const kanbanReducer = (state = initailState, action) => {
 
     switch (action.type) {
         // 전체 LIST 가져오기
-        case GET_KANBANLIST:
+        case GET_KANBANLIST: {
 
             let kanbanList = []
             if (((action.payload).length) !== 0) {
@@ -24,14 +24,30 @@ const kanbanReducer = (state = initailState, action) => {
 
 
             return kanbanList
+        }
+        //new list 추가한 state 만들기
+        case ADD_LIST: {
 
-        // new card 추가한 state 만들기
-        // case ADD_CARD:
-        //     const newCard = {
-        //         content: action.payload.text,
-        //         id: `card-${}`
-        //     }
+            let listID = 100000
+            state.map(st => { console.log(st.id) })
 
+            const newList = {
+                category: action.payload.category,
+                cards: [],
+                id: `list-${listID}`
+
+            }
+            console.log("=> listReducer,ADD_LIST", newList)
+            listID += 1
+            if (state === initailState) {
+                return [newList]
+            } else return [...state, newList]
+
+
+
+
+
+        }
         default: return state
     }
 
