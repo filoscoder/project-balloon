@@ -14,6 +14,7 @@ import MessageRoundedIcon from "@material-ui/icons/MessageRounded";
 import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
 
 import { Link } from 'react-router-dom';
+
 const styles = {
   dividermax: {
     backgroundColor: "#327D64",
@@ -46,23 +47,28 @@ class Sidebar extends Component {
       <div className="list">
         <List>
           <div className="listitem">
-            <ListItem button>
-              <AccountBoxRoundedIcon fontSize="large" />
-              <div className="listitemtext">
-                <ListItemText primary="Accounts" />
-              </div>
-            </ListItem>
+            <Link to="/Login" style={{ textDecoration: 'none', color: 'white' }}>
+              <ListItem button>
+                <AccountBoxRoundedIcon fontSize="large" />
+                <div className="listitemtext">
+                  <ListItemText primary="Accounts" />
+                </div>
+              </ListItem>
+            </Link>
           </div>
           <Divider style={styles.dividermax} />
 
           <div className="listitem">
-            <ListItem button>
-              <DeveloperBoardRoundedIcon fontSize="large" />
-              <div className="listitemtext">
-                <ListItemText primary="Boards" />
-              </div>
-            </ListItem>
+            <Link to="/kanban" style={{ textDecoration: 'none', color: 'white' }}>
+              <ListItem button>
+                <DeveloperBoardRoundedIcon fontSize="large" />
+                <div className="listitemtext">
+                  <ListItemText primary="Boards" />
+                </div>
+              </ListItem>
+            </Link>
           </div>
+
 
           <Divider style={styles.dividermax} />
           <div className="listitem">
@@ -75,12 +81,14 @@ class Sidebar extends Component {
           </div>
           <Divider style={styles.dividermax} />
           <div className="listitem">
-            <ListItem button>
-              <SettingsRoundedIcon fontSize="large" />
-              <div className="listitemtext">
-                <ListItemText primary="Settings" />
-              </div>
-            </ListItem>
+            <Link to="/config" style={{ textDecoration: 'none', color: 'white' }}>
+              <ListItem button>
+                <SettingsRoundedIcon fontSize="large" />
+                <div className="listitemtext">
+                  <ListItemText primary="Settings" />
+                </div>
+              </ListItem>
+            </Link>
           </div>
           <Divider style={styles.dividermax} />
         </List>
