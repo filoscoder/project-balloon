@@ -15,6 +15,10 @@ const ListContainer = styled.div`
     flex-direction: row;
     justify-content: center;
     width : 100%;
+    max-width:1300px;
+    
+    
+    
 `;
 const styles = {
 
@@ -175,27 +179,31 @@ class KanbanFull extends Component {
 
                 </div>
 
-                <ListContainer>
-                    {/* {(kanbans[0].category === 'No List yet') ?
-                        <h2> No List yet {<br />}
-                            Make your List </h2> :
-                        kanbans.map((kanban, index) =>
-                            <KanbanList listId={kanban.id} key={kanban.id} category={kanban.category} cards={kanban.cards} index={index} project_id={this.props.project_id}></KanbanList>
-                        )
-                    } */}
+                <div style={{ display: 'table', margin: 'auto', paddingLeft: 8 }}>
+
+
+                    <ListContainer>
+                        {(kanbans[0].category === 'No List yet') ?
+                            <h2> No List yet {<br />}
+                                Make your List </h2> :
+                            kanbans.map((kanban, index) =>
+                                <KanbanList listId={kanban.id} key={kanban.id} category={kanban.category} cards={kanban.cards} index={index} project_id={this.props.project_id}></KanbanList>
+                            )
+                        }
 
 
 
-                    {kanbans.map((kanban, index) =>
+                        {/* {kanbans.map((kanban, index) =>
                         <KanbanList listId={kanban.id} key={kanban.id} category={kanban.category} cards={kanban.cards} index={index} project_id={this.props.project_id}></KanbanList>
-                    )}
+                    )} */}
 
 
-                    {newList}
+                        {newList}
 
 
 
-                </ListContainer>
+                    </ListContainer>
+                </div>
             </div>
         )
     }

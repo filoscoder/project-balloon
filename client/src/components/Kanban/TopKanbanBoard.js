@@ -117,7 +117,7 @@ class TopKanbanBoard extends Component {
                 return (
                     <div project_id={project.project_id} key={project.project_id} >
                         <ListItemAvatar>
-                            <Avatar style={{ backgroundColor: 'pink', cursor: 'pointer', opacity: 0.7 }} project_id={project.project_id} onClick={this.changeProjectId} ></Avatar>
+                            <Avatar style={{ backgroundColor: 'pink', cursor: 'pointer', opacity: 0.7 }} project_id={project.project_id} onClick={this.changeProjectId} >{project.project_name[0]}</Avatar>
                         </ListItemAvatar>
                         {project.project_name}
                     </div>

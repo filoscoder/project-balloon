@@ -13,6 +13,7 @@ import DeveloperBoardRoundedIcon from "@material-ui/icons/DeveloperBoardRounded"
 import MessageRoundedIcon from "@material-ui/icons/MessageRounded";
 import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
 
+import { Link } from 'react-router-dom';
 const styles = {
   dividermax: {
     backgroundColor: "#327D64",
@@ -53,6 +54,7 @@ class Sidebar extends Component {
             </ListItem>
           </div>
           <Divider style={styles.dividermax} />
+
           <div className="listitem">
             <ListItem button>
               <DeveloperBoardRoundedIcon fontSize="large" />
@@ -61,6 +63,7 @@ class Sidebar extends Component {
               </div>
             </ListItem>
           </div>
+
           <Divider style={styles.dividermax} />
           <div className="listitem">
             <ListItem button>
