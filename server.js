@@ -217,6 +217,20 @@ app.post('/newCard', (req, res) => {
 })
 
 
+// 회원가입
+app.post('/api/customers', (req, res) => {
+  const body = req.body
+
+  mysqlConnection.query("insert into members(email, password, name) values (?, ?, ?)", [body.email, body.password, body.name], (err, result) => {
+    if (!err) {
+      console.log('회원가입성공')
+    } else {
+      console.log(err)
+    }
+  })
+})
+
+
 //});
 
 const PORT = process.env.PORT || 5000;
