@@ -15,7 +15,7 @@ const styles = {
         display: 'flex',
         flexDirection: 'row',
         padding: 10,
-        marginTop: 0
+        marginTop: 10
 
     },
 
@@ -119,7 +119,7 @@ class TopKanbanBoard extends Component {
                         <ListItemAvatar>
                             <Avatar style={{ backgroundColor: 'pink', cursor: 'pointer', opacity: 0.7 }} project_id={project.project_id} onClick={this.changeProjectId} >{project.project_name[0]}</Avatar>
                         </ListItemAvatar>
-                        {project.project_name}
+                        {/* {project.project_name} */}
                     </div>
                 )
 

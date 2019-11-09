@@ -12,7 +12,7 @@ import AccountBoxRoundedIcon from "@material-ui/icons/AccountBoxRounded";
 import DeveloperBoardRoundedIcon from "@material-ui/icons/DeveloperBoardRounded";
 import MessageRoundedIcon from "@material-ui/icons/MessageRounded";
 import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
-
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const styles = {
@@ -27,6 +27,8 @@ const styles = {
     color: "white"
   }
 };
+
+
 
 class Sidebar extends Component {
   state = {
@@ -59,6 +61,7 @@ class Sidebar extends Component {
           <Divider style={styles.dividermax} />
 
           <div className="listitem">
+
             <Link to="/kanban" style={{ textDecoration: 'none', color: 'white' }}>
               <ListItem button>
                 <DeveloperBoardRoundedIcon fontSize="large" />
@@ -151,5 +154,8 @@ class Sidebar extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  member: state.members.member,
+})
 
-export default Sidebar;
+export default connect(mapStateToProps)(Sidebar);
