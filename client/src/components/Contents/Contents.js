@@ -7,9 +7,11 @@ import { Switch, Route } from 'react-router-dom';
 import LoginForm from '../Members/LoginForm';
 import ConfigScreen from '../Configuration/ConfigScreen'
 
+
 class Contents extends Component {
 
     render() {
+        console.log("Contents render==>", this.props.member)
         return (
             <div style={{ minHeight: '100%', display: 'flex' }}>
 
@@ -20,9 +22,8 @@ class Contents extends Component {
                     <Switch>
                         <Route exact path="/" component={KanbanBoard} />
                         <Route path="/kanban" component={KanbanBoard} />
-                        <Route path="/Login" component={LoginForm} />
+                        {/* <Route path="/Login" component={LoginForm} /> */}
                         <Route path="/config" component={ConfigScreen} />
-
                     </Switch>
 
 
@@ -33,7 +34,10 @@ class Contents extends Component {
 
     }
 }
+const mapStateToProps = state => ({
+    member: state.members.member,
+})
 
-export default connect()(Contents);
+export default connect(mapStateToProps)(Contents);
 
 

@@ -1,8 +1,29 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
-
+const session = require('express-session');
 const app = express();
+
+// 세션 사용
+app.use(session({
+  secret: 'balloon',
+  resave: false,
+  saveUninitialized: true
+}))
+
+const cors = require('cors');
+const corsOptions = {
+  origin: true,
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+
+// 세션 초기 설정
+// app.post('/', function (req, res) {
+//   sess = req.session;
+// });
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,17 +45,7 @@ mysqlConnection.connect((err) => {
   }
 })
 
-//참고용 추후 지울것
-app.get('/api/customers', (req, res) => {
-  const customers = [
-    { id: 1, firstName: 'John', lastName: 'Doe' },
-    { id: 2, firstName: 'Brad', lastName: 'Traversy' },
-    { id: 3, firstName: 'Mary', lastName: 'Swanson' },
-  ];
 
-  res.json(customers);
-
-});
 
 //참고용 추후 지우거나 수정할 것
 app.get('/members', (req, res) => {
@@ -218,7 +229,7 @@ app.post('/newCard', (req, res) => {
 
 
 // 회원가입
-app.post('/api/customers', (req, res) => {
+app.post('/customers', (req, res) => {
   const body = req.body
 
   mysqlConnection.query("insert into members(email, password, name) values (?, ?, ?)", [body.email, body.password, body.name], (err, result) => {
@@ -230,7 +241,72 @@ app.post('/api/customers', (req, res) => {
   })
 })
 
+// 로그인
+app.post('/login', (req, res) => {
+  const body = req.body
+  // 세션 사용
+  sess = req.session;
+  // 입력한 email이 DB의 members 테이블 있나 확인
+  mysqlConnection.query("SELECT * FROM members WHERE email=?", [body.email], (err, rows, fields) => {
 
+    if (!err) {
+      let members = rows[0]
+
+      // 고객정보가 있으면
+      if (members) {
+
+        // 고객정보 password와 입력한 password를 확인
+        if (members.password === body.password) {
+          console.log('로그인성공')
+
+          // email 세션 저장
+          sess.email = body.email;
+          sess.save(() => {
+            console.log("로그인", sess)
+          })
+          res.json(sess)
+
+
+
+        } else {
+          console.log('비밀번호가 일치하지 않습니다')
+
+        }
+
+      } else {
+        console.log('회원이 아닙니다')
+      }
+
+    } else {
+      console.log(err)
+    }
+  })
+
+
+})
+
+// 로그인 세션 확인
+app.get('/comfirmSession', (req, res) => {
+  sess = req.session;
+  console.log("/comfirmSession=>", sess)
+  res.json(sess)
+})
+
+// 로그 아웃
+// app.post('/logout', (req, res) => {
+//   sess = req.session;
+//   if (sess.email) {
+//     req.session.destroy(function (err) {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         res.redirect('/');
+//       }
+//     })
+//   } else {
+//     res.redirect('/');
+//   }
+// })
 //});
 
 const PORT = process.env.PORT || 5000;

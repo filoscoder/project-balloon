@@ -1,12 +1,20 @@
 
-import { GET_MEMBERS } from '../actions/constants'
+import { SET_USER } from '../actions/constants'
 
+const initailState = {
+    member: ''
+}
 
-
-const memberReducer = (state = [], action) => {
+const memberReducer = (state = initailState, action) => {
     switch (action.type) {
-        case GET_MEMBERS:
-            return action.payload
+        case SET_USER: {
+
+            const newState = { ...state, member: action.payload }
+
+            console.log("memberReducer SET_USER ,action.payload:", newState)
+            return newState
+        }
+
         default:
             return state
     }

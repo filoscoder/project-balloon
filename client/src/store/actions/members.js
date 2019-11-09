@@ -1,11 +1,12 @@
-import { GET_MEMBERS } from './constants';
+import { SET_USER } from './constants';
 
-export const getMembers = () => dispatch => {
-    console.log("getMembers() 호출")
-    return fetch('/members')
-        .then(res => res.json())
-        .then(members => dispatch({ type: GET_MEMBERS, payload: members }))
-        .then(payload => console.log("getMembers payload:", payload))
+
+export const setUser = (email) => {
+    console.log("action setUser() 호출", email)
+    return (
+        { type: SET_USER, payload: email }
+
+    )
 }
 
 

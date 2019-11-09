@@ -1,39 +1,45 @@
 import React, { Component } from 'react'
-import { Provider } from 'react-redux'
 import './App.css'
-import store from '../store'
-
-// import { BrowserRouter as Router } from 'react-router-dom';
-// import { Switch, Route } from 'react-router-dom';
 import LoginForm from './Members/LoginForm'
 import Contents from './Contents/Contents'
+import { connect } from 'react-redux'
+
 
 class App extends Component {
 
+  componentDidMount() {
+    console.log("componentDidMount", this.props)
+
+
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("shouldComponentUpdate", nextProps)
+    return true
+  }
+
+
   render() {
+    console.log("APP render", this.props)
+    const { member } = this.props;
+    const user = sessionStorage.getItem('user');
+    console.log("APP render", member !== '', member, "session=>", user)
     return (
-      <Provider store={store}>
-        {/* <div className="app"> */}
-        {/* <Router>
-            <Route exact path="/" component={LoginForm} />
-            <Switch>
-              <Route path="/kanban/:name" component={KanbanBoard} />
-              <Route path="/kanban" component={KanbanBoard} />
-            </Switch>
-          </Router> */}
-        {/* 
-          <Sidebar />
-          <KanbanBoard /> */}
-        <div>
-          <Contents />
-        </div>
+      <div>
+        {user ? <Contents /> : <LoginForm />}
+        {/* <LoginForm/> */}
+        {/* <Contents /> */}
+      </div>
 
-
-
-
-      </Provider>
     )
   }
 }
+const mapStateToProps = state => ({
+  member: state.members.member,
+})
 
-export default App
+
+
+
+
+export default connect(mapStateToProps)(App) 
