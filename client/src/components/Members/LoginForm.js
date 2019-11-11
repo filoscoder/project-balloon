@@ -17,8 +17,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import { connect } from 'react-redux';
-import { setUser } from '../../store/actions/members'
-import { Redirect } from 'react-router-dom'
+import { setUser, checkSession } from '../../store/actions/members'
+
 
 const styles = {
   root: {
@@ -143,18 +143,20 @@ class LoginForm extends Component {
       password: this.state.password,
       name: this.state.name
     }
+    console.log(data)
 
-    fetch('/customers', {
-      method: "post",
+    fetch('/api/customers', {
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       mode: "cors",
+      credentials: 'include',
       body: JSON.stringify(data)
     })
-      .then(data => console.log(data))
-      .catch(error => console.log(error));
+      .then(data => console.log("입력 후 ", data))
+      .catch(error => console.log("err", error));
   }
 
   // 열기
@@ -185,9 +187,9 @@ class LoginForm extends Component {
   // 로그인 버튼이 눌렸을 때
   handleLogin = (e) => {
     e.preventDefault();
-
+    const { dispatch } = this.props
     this.loginCustomer()
-
+    // checkSession()
     this.setState({
       email: '',
       password: '',
@@ -215,8 +217,9 @@ class LoginForm extends Component {
       credentials: 'include',
       body: JSON.stringify(data)
     })
-      .then(response => response.json())
+      .then(response => console.log(response.json()))
       .then(sessionStorage.setItem('user', this.state.email))
+      // .then(dispatch(checkSession()))
       .then(dispatch(setUser(sessionStorage.getItem('user'))))
       .catch(error => console.log(error))
 
@@ -292,7 +295,7 @@ class LoginForm extends Component {
                 </Grid>
 
                 <Grid item>
-                  <Link href="#" variant="body3">
+                  <Link href="#" variant="body2">
                     비밀번호 찾기
                   </Link>
                 </Grid>

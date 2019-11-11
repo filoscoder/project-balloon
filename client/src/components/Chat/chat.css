@@ -1,0 +1,27 @@
+html, body {
+  font-family: 'Roboto', sans-serif;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+.chat_outerContainer {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: #FFFFFF;
+}
+.chat_messageContainer {
+  width: 100%;
+  height: 100%;
+}
+.chatlist1{
+  display: flex;
+  border-right: solid 1px;
+  height: 100%;
+}
+
+
+
+
+

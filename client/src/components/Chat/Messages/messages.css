@@ -1,0 +1,6 @@
+.chatmessages {
+    padding: 5% 0;
+    flex: auto;
+    max-height: 100%;
+    overflow-y: auto;
+  }

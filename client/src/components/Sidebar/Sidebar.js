@@ -49,14 +49,14 @@ class Sidebar extends Component {
       <div className="list">
         <List>
           <div className="listitem">
-            <Link to="/Login" style={{ textDecoration: 'none', color: 'white' }}>
-              <ListItem button>
-                <AccountBoxRoundedIcon fontSize="large" />
-                <div className="listitemtext">
-                  <ListItemText primary="Accounts" />
-                </div>
-              </ListItem>
-            </Link>
+
+            <ListItem button>
+              <AccountBoxRoundedIcon fontSize="large" />
+              <div className="listitemtext">
+                <ListItemText primary="Accounts" />
+              </div>
+            </ListItem>
+
           </div>
           <Divider style={styles.dividermax} />
 
@@ -75,12 +75,14 @@ class Sidebar extends Component {
 
           <Divider style={styles.dividermax} />
           <div className="listitem">
-            <ListItem button>
-              <MessageRoundedIcon fontSize="large" />
-              <div className="listitemtext">
-                <ListItemText primary="Messges" />
-              </div>
-            </ListItem>
+            <Link to="/chat" style={{ textDecoration: 'none', color: 'white' }}>
+              <ListItem button>
+                <MessageRoundedIcon fontSize="large" />
+                <div className="listitemtext">
+                  <ListItemText primary="Messges" />
+                </div>
+              </ListItem>
+            </Link>
           </div>
           <Divider style={styles.dividermax} />
           <div className="listitem">

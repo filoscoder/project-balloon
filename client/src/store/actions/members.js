@@ -1,4 +1,5 @@
-import { SET_USER } from './constants';
+import { SET_USER, CHECK_SESSION } from './constants';
+
 
 
 export const setUser = (email) => {
@@ -9,4 +10,21 @@ export const setUser = (email) => {
     )
 }
 
+export const checkSession = () => dispatch => {
+    console.log("action checkSession() 호출")
+    return (
+        fetch('/api/checksession')
+            .then(response => response.json())
+            .then(sess => {
+                dispatch({
+                    type: CHECK_SESSION,
+                    payload: sess
+                })
+
+            }
+
+
+            ))
+
+}
 

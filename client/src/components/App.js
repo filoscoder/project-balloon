@@ -3,6 +3,7 @@ import './App.css'
 import LoginForm from './Members/LoginForm'
 import Contents from './Contents/Contents'
 import { connect } from 'react-redux'
+import { setUser, checkSession } from '../store/actions/members'
 
 
 class App extends Component {
@@ -15,20 +16,26 @@ class App extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     console.log("shouldComponentUpdate", nextProps)
+
     return true
   }
 
 
   render() {
     console.log("APP render", this.props)
-    const { member } = this.props;
+    const { dispatch, member } = this.props;
     const user = sessionStorage.getItem('user');
+    dispatch(setUser(user))
+    // dispatch(checkSession())
+
+    //const sess = dispatch(checkSession());
+    // console.log("sess", sess)
+
     console.log("APP render", member !== '', member, "session=>", user)
     return (
       <div>
-        {user ? <Contents /> : <LoginForm />}
-        {/* <LoginForm/> */}
-        {/* <Contents /> */}
+        {member ? <Contents /> : <LoginForm />}
+
       </div>
 
     )
@@ -37,6 +44,7 @@ class App extends Component {
 const mapStateToProps = state => ({
   member: state.members.member,
 })
+
 
 
 

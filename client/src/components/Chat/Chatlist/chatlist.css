@@ -1,0 +1,7 @@
+
+.chatlist{
+    display: flex;
+    border-right: solid 1px;
+    height: 100%;
+    width: auto;
+}
