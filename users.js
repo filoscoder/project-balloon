@@ -11,7 +11,7 @@ const addUser = ({ id, name, room }) => {
   if (!name || !room) return { error: 'Username and room are required.' };
 
   //같은 user가 같은 room에 들어가려고 한다면 새로 만들 수 없음.
-  //if (existingUser) return { error: 'Username is taken.' };
+  // if (existingUser) return { error: 'Username is taken.' };
 
   const user = { id, name, room };
 

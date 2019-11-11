@@ -49,7 +49,7 @@ mongoose.connect(`mongodb://${'balloon'}:${'balloon'}@localhost:27017/admin`, { 
 router.get('/api/chats/:member', function (req, res) {
     Chat.find({ users: req.params.member }, function (err, chats) {
         if (err) return res.status(500).send({ error: 'database failure' });
-        console.log(chats)
+        //console.log(chats)
         res.json(chats);
     })
 });

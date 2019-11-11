@@ -6,7 +6,7 @@ import io from "socket.io-client";
 import Messages from "./Messages/Messages";
 import InfoBar from "./InfoBar/InfoBar";
 import Input from "./Input/Input";
-import Chatlist from "./Chatlist/Chatlist";
+
 
 //import material-ui component
 import Grid from "@material-ui/core/Grid";
@@ -18,11 +18,9 @@ import "./chat.css";
 let socket;
 
 // material ui styles def
-const styles = {
 
-}
 
-const Chat = ({ location }) => {
+const Chat = ({ chats, location }) => {
 
   // "name","room"의 상태 값 정의
   const [name, setName] = useState("");
@@ -52,15 +50,33 @@ const Chat = ({ location }) => {
       setRoom(room);
       setName(name);
 
+
+      chats.map(chat => {
+        if (chat.room_id === room) {
+          setUsers(chat.users)
+          setMessages(chat.messages)
+        }
+      })
+
+
       socket.emit("join", { name, room }, error => {
         console.log("client join 실행", name, room)
         if (error) {
           alert(error);
         }
       });
+
+      socket.on("message", message => {
+        setMessages([]);
+      });
+
+      // socket.on("roomData", ({ users }) => {
+      //   setUsers(users);
+      // });
+
     }
 
-  }, [ENDPOINT, location.search]); // Endpoint와 location.search가 변경될때만 use effect/ rerender
+  }, [location]); // Endpoint와 location.search가 변경될때만 use effect/ rerender
 
   useEffect(() => {
     if (location.search) {
@@ -81,15 +97,7 @@ const Chat = ({ location }) => {
 
   }, [messages]);
 
-  // useEffect(() => {
-  //   getChatList('홍길자')
 
-
-  //   console.log("getChatList  후 state", chatlists.length, chatlists)
-
-
-
-  // }, [chatlists]);
 
 
   const sendMessage = event => {
@@ -103,31 +111,9 @@ const Chat = ({ location }) => {
 
   };
 
-  const getChatList = (memberid) => {
-
-    console.log("chat getChatList")
-    fetch(`/api/chats/${memberid}`)
-      .then(function (response) {
-        return response.json()
-      })
-      .then(function (myJson) {
-        console.log(myJson)
-        if (chatlists.length === 0) {
-          return (setChatlists(myJson))
-        }
-      })
-
-  }
-
-
 
 
   return (
-    // <div className="chat_outerContainer">
-
-    //   <div className="chat_chatlistContainer">
-    //     <Chatlist room={room} name={name} />
-    //   </div>
 
 
     <div className="chat_messageContainer">

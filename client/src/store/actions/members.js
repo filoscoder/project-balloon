@@ -25,9 +25,5 @@ export const checkSession = () => {
             })
     )
 
-
-
-
-
 }
 

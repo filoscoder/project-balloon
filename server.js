@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 io.on('connect', (socket) => {
   socket.on('join', ({ name, room }, callback) => {
-    console.log("io connect join name & room", name, room, "socket", socket.id);
+    console.log("io connect join name & room", name, room, "socket_id", socket.id);
 
     console.log("server connect socket", socket.id)
     const { error, user } = addUser({ id: socket.id, name, room });
@@ -55,10 +55,10 @@ io.on('connect', (socket) => {
     socket.join(user.room);
 
     // emit:  backend to frontend
-    socket.emit('message', { user: 'admin', text: `${user.name}, welcome to room ${user.room}.` });
+    socket.emit('message', { user: 'admin', message: `${user.name}, welcome to room ${user.room}.` });
 
     //방에 있는 모두에게 알리는 것.
-    socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
+    socket.broadcast.to(user.room).emit('message', { user: 'admin', message: `${user.name} has joined!` });
 
     io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
@@ -69,7 +69,7 @@ io.on('connect', (socket) => {
   socket.on('sendMessage', (message, callback) => {
     const user = getUser(socket.id);
 
-    io.to(user.room).emit('message', { user: user.name, text: message });
+    io.to(user.room).emit('message', { user: user.name, message: message });
 
     callback();
   });
