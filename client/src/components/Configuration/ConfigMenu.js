@@ -7,7 +7,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 
 class ConfigMenu extends React.Component {
-    
+
     render() {
         return (
             <Card>
@@ -31,7 +31,8 @@ class ConfigMenu extends React.Component {
                     <Divider />
 
                     {/* MENU 2: User logout session */}
-                    <ListItem button name="menu2">
+
+                    <ListItem button name="menu2" >
                         <ListItemIcon>
                             <ExitToAppIcon />
                         </ListItemIcon>

@@ -44,15 +44,16 @@ const Chat = ({ location }) => {
 
     if (location.search) {
       const { name, room } = queryString.parse(location.search); //url param으로 부터 name/room 구하기.
-      // console.log("location url 확인 ", location.search) // url parameter
+      console.log("location url 확인 ", location.search) // url parameter
 
 
       socket = io(ENDPOINT); // servers socket 연결
-
+      console.log(socket)
       setRoom(room);
       setName(name);
 
       socket.emit("join", { name, room }, error => {
+        console.log("client join 실행", name, room)
         if (error) {
           alert(error);
         }
@@ -80,16 +81,15 @@ const Chat = ({ location }) => {
 
   }, [messages]);
 
-  useEffect(() => {
-    const chatlist = getChatList('홍길동')
-    console.log("chat getChatList 결과", chatlist)
-
-    // setChatlists(chatlist);
-    console.log("state", chatlists)
+  // useEffect(() => {
+  //   getChatList('홍길자')
 
 
+  //   console.log("getChatList  후 state", chatlists.length, chatlists)
 
-  }, [chatlists]);
+
+
+  // }, [chatlists]);
 
 
   const sendMessage = event => {
@@ -108,40 +108,46 @@ const Chat = ({ location }) => {
     console.log("chat getChatList")
     fetch(`/api/chats/${memberid}`)
       .then(function (response) {
-        const lists = response.json()
-        console.log(lists)
-        return lists
+        return response.json()
       })
-    // }).then(function (lists) {
-    //   setChatlists(lists)
-    // })
-
+      .then(function (myJson) {
+        console.log(myJson)
+        if (chatlists.length === 0) {
+          return (setChatlists(myJson))
+        }
+      })
 
   }
 
+
+
+
   return (
-    <div className="chat_outerContainer">
-      <div className="chat_chatlistContainer">
-        <Chatlist room={room} name={name} />
-      </div>
-      <div className="chat_messageContainer">
-        <Grid container spacing={1} height="100%">
-          <Grid item xs={12} height="15%">
-            <InfoBar className="infobar" room={room} xs={12} />
-          </Grid>
-          <Grid item xs={12} height="70%">
-            <Messages className="messages" messages={messages} name={name} />
-          </Grid>
-          <Grid item xs={12} height="15%">
-            <Input
-              className="input"
-              message={message}
-              setMessage={setMessage}
-              sendMessage={sendMessage} />
-          </Grid>
+    // <div className="chat_outerContainer">
+
+    //   <div className="chat_chatlistContainer">
+    //     <Chatlist room={room} name={name} />
+    //   </div>
+
+
+    <div className="chat_messageContainer">
+      <Grid container spacing={1} height="100%">
+        <Grid item xs={12} height="15%">
+          <InfoBar className="infobar" room={room} xs={12} />
         </Grid>
-      </div>
+        <Grid item xs={12} height="70%">
+          <Messages className="messages" messages={messages} name={name} />
+        </Grid>
+        <Grid item xs={12} height="15%">
+          <Input
+            className="input"
+            message={message}
+            setMessage={setMessage}
+            sendMessage={sendMessage} />
+        </Grid>
+      </Grid>
     </div>
+    // </div>
   );
 };
 

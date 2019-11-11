@@ -126,7 +126,7 @@ router.get('/projectList/:memberid', (req, res) => {
                 })
 
                 res.json(projectList)
-                console.log(projectList)
+                //console.log(projectList)
 
             }
         })
@@ -213,7 +213,7 @@ router.get('/kanbanList/:project_id', (req, res) => {
 // 새로운 project 생성하기.
 router.post("/newProject", (req, res) => {
     const body = req.body
-    console.log("server newProject==> body", req)
+    //  console.log("server newProject==> body", req)
     mysqlConnection.query("insert into projects(id,name,type,image_id) values (?,?,?,1) ", [body.id, body.name, body.type], (err, result) => {
         if (!err) {
             console.log("projects 입력 성공")
@@ -239,7 +239,7 @@ router.post("/newProject", (req, res) => {
 // 새로운 card 입력하기
 router.post('/newCard', (req, res) => {
     const body = req.body
-    console.log("server newCard==> body", body)
+    //console.log("server newCard==> body", body)
     mysqlConnection.query("insert into kanbancards(category, content, project_id) values (?,?,?)", [body.category, body.content, body.project_id], (err, result) => {
         if (!err) {
             console.log("new card 입력 성공")
@@ -254,7 +254,7 @@ router.post('/newCard', (req, res) => {
 // 회원가입
 router.post('/api/customers', (req, res) => {
     const body = req.body
-    console.log("회원가입 server", body)
+    //console.log("회원가입 server", body)
     mysqlConnection.query("insert into members(email, password, name) values (?, ?, ?)", [body.email, body.password, body.name], (err, result) => {
         if (!err) {
             console.log('회원가입성공')
@@ -285,7 +285,7 @@ router.post('/login', (req, res) => {
                     // email 세션 저장
                     sess.email = body.email;
                     sess.save(() => {
-                        console.log("로그인", sess)
+                        //console.log("로그인", sess)
                     })
                     res.json(sess)
 
@@ -314,27 +314,27 @@ router.get('/api/checksession', (req, res) => {
     sess = req.session;
     if (sess) {
         res.json(sess)
-        console.log("session check", sess)
+        //console.log("session check", sess)
     }
     // res.sendFile('index.html');
 });
 
 // 로그 아웃
-// router.post('/logout', (req, res) => {
-//   sess = req.session;
-//   if (sess.email) {
-//     req.session.destroy(function (err) {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         res.redirect('/');
-//       }
-//     })
-//   } else {
-//     res.redirect('/');
-//   }
-// })
-//});
+router.post('/logout', (req, res) => {
+    sess = req.session;
+    if (sess.email) {
+        req.session.destroy(function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.redirect('/');
+            }
+        })
+    } else {
+        res.redirect('/');
+    }
+})
+
 
 
 module.exports = router; 

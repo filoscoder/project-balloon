@@ -189,7 +189,7 @@ class LoginForm extends Component {
     e.preventDefault();
     const { dispatch } = this.props
     this.loginCustomer()
-    // checkSession()
+
     this.setState({
       email: '',
       password: '',
@@ -217,10 +217,31 @@ class LoginForm extends Component {
       credentials: 'include',
       body: JSON.stringify(data)
     })
-      .then(response => console.log(response.json()))
-      .then(sessionStorage.setItem('user', this.state.email))
-      // .then(dispatch(checkSession()))
-      .then(dispatch(setUser(sessionStorage.getItem('user'))))
+      // .then(response => console.log(response.json()))
+      // .then(sessionStorage.setItem('user', this.state.email))
+      // // .then(dispatch(checkSession()))
+      // .then(dispatch(setUser(sessionStorage.getItem('user'))))
+      //
+      .then(function (response) {
+        return response.json()
+      })
+      .then(function (myJson) {
+        console.log(myJson.email)
+        return myJson.email
+      }).then(function (email) {
+        fetch('/api/checksession')
+          .then(function (response) {
+            return response.json()
+          })
+          .then(function (sess) {
+            console.log(sess.email)
+            if (email === sess.email) {
+              return dispatch(setUser(sess.email))
+            }
+          })
+
+
+      })
       .catch(error => console.log(error))
 
   }

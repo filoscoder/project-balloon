@@ -1,0 +1,18 @@
+
+.chat_outerContainer {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: #FFFFFF;
+}
+
+.chatlist1{
+  display: flex;
+  border-right: solid 1px;
+  height: 100%;
+}
+
+
+
+
+

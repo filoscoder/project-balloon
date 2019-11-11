@@ -44,9 +44,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 io.on('connect', (socket) => {
   socket.on('join', ({ name, room }, callback) => {
-    console.log("io connect join name & room", name, room);
+    console.log("io connect join name & room", name, room, "socket", socket.id);
 
+    console.log("server connect socket", socket.id)
     const { error, user } = addUser({ id: socket.id, name, room });
+
 
     if (error) return callback(error);
 
