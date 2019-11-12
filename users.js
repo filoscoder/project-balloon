@@ -7,15 +7,33 @@ const addUser = ({ id, name, room }) => {
   room = room.trim().toLowerCase();
 
   const existingUser = users.find((user) => user.room === room && user.name === name);
+  let user = {}
+
+
+  if (users.length > 0) {
+    users.map(list => {
+      if (list.room === room && list.name === name) {
+        user = { id: list.id, name, room }
+
+      } else {
+        user = { id, name, room };
+        users.push(user);
+
+      }
+
+    })
+  } else {
+    user = { id, name, room };
+    users.push(user);
+  }
+
 
   if (!name || !room) return { error: 'Username and room are required.' };
 
-  //같은 user가 같은 room에 들어가려고 한다면 새로 만들 수 없음.
-  // if (existingUser) return { error: 'Username is taken.' };
 
-  const user = { id, name, room };
+  //user = { id, name, room };
 
-  users.push(user);
+  //users.push(currentuser);
 
   return { user };
 }

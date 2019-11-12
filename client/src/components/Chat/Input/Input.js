@@ -11,7 +11,7 @@ const Input = ({ setMessage, sendMessage, message }) => (
     <form className="input_form">
       <Grid container spacing={1}>
         <Grid item xs={11}>
-          <TextField 
+          <TextField
             className="input"
             variant="outlined"
             type="text"
@@ -19,9 +19,9 @@ const Input = ({ setMessage, sendMessage, message }) => (
             value={message}
             onChange={({ target: { value } }) => setMessage(value)}
             onKeyPress={event =>
-              event.key === "Enter" ? sendMessage(event) : null }/></Grid>
+              event.key === "Enter" ? sendMessage(event) : null} /></Grid>
         <Grid item xs={1}>
-          <Fab><SendRoundedIcon varient="contained" onClick={e => sendMessage(e)}/></Fab>
+          <Fab><SendRoundedIcon varient="contained" onClick={e => sendMessage(e)} /></Fab>
         </Grid>
       </Grid>
     </form>

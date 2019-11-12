@@ -73,6 +73,31 @@ router.post('/api/chats', function (req, res) {
     });
 });
 
+//몽고db에 messages Update하기
+router.put('/api/messageUpdate/:room_id', function (req, res) {
+
+
+    Chat.update({ room_id: req.params.room_id }, { $push: { messages: { user: req.body.user, message: req.body.message, date: new Date() } } }, (err, output) => {
+        if (err) res.status(500).json({ error: 'database failure' });
+        console.log(output);
+        if (!output.n) return res.status(404).json({ error: 'book not found' });
+        res.json({ message: 'chat updated' });
+    })
+
+
+
+    // Chat.findByIdAndUpdate(
+    //     { room_id: "room_1" },
+    //     { $push: { "messages": { user: title, msg: msg } } },
+    //     { safe: true, upsert: true, new: true },
+    //     function (err, model) {
+    //         console.log(err);
+    //     }
+    // );
+});
+
+
+
 
 
 

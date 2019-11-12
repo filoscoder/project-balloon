@@ -61,7 +61,7 @@ const Chatlist = ({ chats }) => {
             </ListItem>
           </div>
           <Divider style={styles.divider} />
-          {chats.length !== 0 ? chats.map(chatroom => <Chatlistitem key={chatroom.room_id} room={chatroom.room_id} name='홍길동' />) : null}
+          {chats.length !== 0 ? chats.map(chatroom => <Chatlistitem key={chatroom.room_id} room={chatroom.room_id} name='홍길자' />) : null}
           {/* <Chatlistitem room={room} name={name}/> */}
         </List>
       </div>

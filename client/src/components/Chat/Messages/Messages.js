@@ -14,15 +14,22 @@ const ROOT_CSS = css({
   width: "100%"
 });
 
-const Messages = ({ messages, name }) => (
+const Messages = ({ messages, name }) => {
+  console.log(messages)
 
-    <ScrollToBottom className={ROOT_CSS}>
-      {messages.map((message, i) => (
-        <div key={i}>
-          <Message message={message} name={name} />
-        </div>
-      ))}
-    </ScrollToBottom>
-);
+  return (
+    < ScrollToBottom className={ROOT_CSS} >
+      {
+        messages.map((message, i) => (
+          <div key={i}>
+            <Message message={message} name={name} />
+          </div>
+        ))
+      }
+    </ScrollToBottom >
+
+  )
+
+};
 
 export default Messages;

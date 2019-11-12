@@ -10,9 +10,9 @@ import Input from "./Input/Input";
 
 //import material-ui component
 import Grid from "@material-ui/core/Grid";
-
-
 import "./chat.css";
+import { connect } from "react-redux";
+import { get_chatlist } from '../../store/actions/Chat/chatList'
 
 // socket
 let socket;
@@ -20,7 +20,7 @@ let socket;
 // material ui styles def
 
 
-const Chat = ({ chats, location }) => {
+const Chat = ({ chats, location, get_chatlist }) => {
 
   // "name","room"의 상태 값 정의
   const [name, setName] = useState("");
@@ -39,7 +39,8 @@ const Chat = ({ chats, location }) => {
 
   //when render
   useEffect(() => {
-
+    get_chatlist(name)
+    console.log(chats)
     if (location.search) {
       const { name, room } = queryString.parse(location.search); //url param으로 부터 name/room 구하기.
       console.log("location url 확인 ", location.search) // url parameter
@@ -66,9 +67,9 @@ const Chat = ({ chats, location }) => {
         }
       });
 
-      socket.on("message", message => {
-        setMessages([]);
-      });
+      // socket.on("message", message => {
+      //   setMessages([]);
+      // });
 
       // socket.on("roomData", ({ users }) => {
       //   setUsers(users);
@@ -82,7 +83,13 @@ const Chat = ({ chats, location }) => {
     if (location.search) {
       socket.on("message", message => {
         setMessages([...messages, message]);
+        updateMessge(room, message)
+
       });
+      console.log("message emit", message)
+      get_chatlist(name)
+      console.log(chats)
+
 
       socket.on("roomData", ({ users }) => {
         setUsers(users);
@@ -98,7 +105,20 @@ const Chat = ({ chats, location }) => {
   }, [messages]);
 
 
-
+  const updateMessge = (roomid, message) => {
+    fetch(`/api/messageUpdate/${roomid}`,
+      {
+        method: "PUT",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        mode: "same-origin",
+        credentials: 'include',
+        body: JSON.stringify(message)
+      })
+      .then(res => console.log(res))
+  }
 
   const sendMessage = event => {
     event.preventDefault();
@@ -106,8 +126,7 @@ const Chat = ({ chats, location }) => {
     if (message) {
       socket.emit("sendMessage", message, () => setMessage(""));
     }
-    console.log("chat/message,messages=>", message, "/", messages);
-    console.log("chat/name=>", name)
+
 
   };
 
@@ -137,5 +156,18 @@ const Chat = ({ chats, location }) => {
   );
 };
 
-export default Chat;
+const mapStateToProps = state => ({
+  chats: state.chats,
+})
+
+const dispatchToProps = (dispatch) => ({
+
+  get_chatlist: (member_id) => {
+    dispatch(get_chatlist(member_id))
+    console.log("dispatch : get_chatlist =>", member_id)
+  },
+
+})
+
+export default connect(mapStateToProps, dispatchToProps)(Chat);
 

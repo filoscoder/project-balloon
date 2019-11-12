@@ -55,10 +55,10 @@ io.on('connect', (socket) => {
     socket.join(user.room);
 
     // emit:  backend to frontend
-    socket.emit('message', { user: 'admin', message: `${user.name}, welcome to room ${user.room}.` });
+    // socket.emit('message', { user: 'admin', message: `${user.name}, welcome to room ${user.room}.` });
 
     //방에 있는 모두에게 알리는 것.
-    socket.broadcast.to(user.room).emit('message', { user: 'admin', message: `${user.name} has joined!` });
+    // socket.broadcast.to(user.room).emit('message', { user: 'admin', message: `${user.name} has joined!` });
 
     io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
@@ -78,7 +78,7 @@ io.on('connect', (socket) => {
     const user = removeUser(socket.id);
 
     if (user) {
-      io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
+      // io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
       io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
     }
   })

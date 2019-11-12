@@ -151,7 +151,7 @@ class LoginForm extends Component {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      mode: "cors",
+      mode: "same-origin",
       credentials: 'include',
       body: JSON.stringify(data)
     })

@@ -13,7 +13,7 @@ import { get_chatlist } from '../../store/actions/Chat/chatList'
 class ChatFull extends Component {
 
     componentDidMount() {
-        console.log("chatfull componentDidMount()", this.props)
+        console.log("chatfull componentDidMount()", this.props.member)
         this.props.get_chatlist('홍길자')
     }
 
@@ -30,8 +30,8 @@ class ChatFull extends Component {
                     <div className="chat_chatlistContainer">
                         <Chatlist chats={chats} />
                     </div>
-                    {/* <Route exact path='/chat' component={Chat} /> */}
-                    <Route exact path='/chat' render={(props) => <Chat {...props} chats={chats} />} />
+                    <Route exact path='/chat' component={Chat} />
+                    {/* <Route exact path='/chat' render={(props) => <Chat {...props} chats={chats} />} /> */}
 
                 </div>
             </Router>
@@ -43,6 +43,7 @@ class ChatFull extends Component {
 
 const mapStateToProps = state => ({
     chats: state.chats,
+    member: state.members.member
 })
 
 const dispatchToProps = (dispatch) => ({
