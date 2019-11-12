@@ -12,8 +12,15 @@ import AccountBoxRoundedIcon from "@material-ui/icons/AccountBoxRounded";
 import DeveloperBoardRoundedIcon from "@material-ui/icons/DeveloperBoardRounded";
 import MessageRoundedIcon from "@material-ui/icons/MessageRounded";
 import SettingsRoundedIcon from "@material-ui/icons/SettingsRounded";
+import Popover from '@material-ui/core/Popover';
+import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
+
+
+
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import AccountInfo from './AccountInfo';
+
 
 const styles = {
   dividermax: {
@@ -31,10 +38,17 @@ const styles = {
 
 
 class Sidebar extends Component {
-  state = {
-    isSidebarExpanded: true
-  }; // sidebar initial state
+  constructor(props) {
+    super(props);
+    this.state = {
+      isSidebarExpanded: true,
+      file: null,
+      name: '',
+      email: '',
+    }
+  };
 
+  // 기본 사이드바
   sidebarExpanded = () => (
     <div className="sidebar">
       <div className="expanded">
@@ -50,6 +64,73 @@ class Sidebar extends Component {
         <List>
           <div className="listitem">
 
+            {/* Account 팝업창 */}
+            <PopupState variant="popover" popupId="demo-popup-popover">
+              {popupState => (
+                <div>
+
+                  {/* Acoount 버튼을 클릭하면 */}
+                  <ListItem button variant="contained" {...bindTrigger(popupState)}>
+
+                    <AccountBoxRoundedIcon fontSize="large" />
+
+                    <div className="listitemtext">
+                      <ListItemText primary="Accounts" />
+                    </div>
+
+                  </ListItem>
+
+                  {/* 팝업창을 활성화 */}
+                  <Popover
+                    {...bindPopover(popupState)}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'center',
+                    }}
+                  >
+
+                    {/* 팝업창 */}
+                    <div style={styles.popup}>
+
+                      {/* 사진 수정 */}
+                      <div style={styles.img}>
+
+                        <input style={styles.hidden} accept="image/*" id="raised-button-file" type="file" file={this.state.file} value={this.state.fileName} onChange={this.handleFileChange} />
+                        <label htmlFor="raised-button-file">
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            component="span"
+                            name="file"
+                          >
+                            사진수정
+                        </Button>
+                        </label>
+                      </div> {/* 사진수정 끝 */}
+
+                      {/* 프로젝트정보 */}
+                      <div style={styles.projectInfo}>
+                        <AccountInfo />
+                      </div> {/* 프로젝트정보 끝 */}
+
+                    </div> {/* 팝업창 끝 */}
+
+                  </Popover>
+                </div>
+              )}
+            </PopupState>
+          </div>
+
+
+
+
+          {/* <List>
+          <div className="listitem">
+
             <ListItem button>
               <AccountBoxRoundedIcon fontSize="large" />
               <div className="listitemtext">
@@ -57,7 +138,7 @@ class Sidebar extends Component {
               </div>
             </ListItem>
 
-          </div>
+          </div> */}
           <Divider style={styles.dividermax} />
 
           <div className="listitem">
