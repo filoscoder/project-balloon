@@ -11,6 +11,7 @@ class ConfigScreen extends Component {
             currentUser: {},
         };
     }
+    
     handleClick = e => {
         let wichMenu = e.relatedEvent
         console.log(wichMenu)
