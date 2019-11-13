@@ -36,7 +36,7 @@ db.once('open', function () {
     console.log("Connected to mongod server");
 });
 
-mongoose.connect(`mongodb://${'balloon'}:${'balloon'}@localhost:27017/admin`, { dbName: 'mongochat' }, (error) => {
+mongoose.connect(`mongodb://${'balloon'}:${'balloon'}@192.168.0.117':27017/admin`, { dbName: 'mongochat' }, (error) => {
     if (error) {
         console.log('몽고디비 연결 에러', error);
     } else {
@@ -102,13 +102,14 @@ router.put('/api/messageUpdate/:room_id', function (req, res) {
 
 
 router.get('/', (req, res) => {
+    console.log('redirected: *@()#$*@#)($*@#()$')
     res.send('server is up and running');
 });
 
 //mysql연결
 var mysqlConnection = mysql.createConnection(
     {
-        host: 'localhost', //'192.168.0.117'
+        host: '192.168.0.117', //'192.168.0.117'
         user: 'balloon',
         password: 'balloon',
         database: 'balloonDB'
@@ -294,6 +295,7 @@ router.post('/login', (req, res) => {
     const body = req.body
     // 세션 사용
     sess = req.session;
+    console.log(sess)
     // 입력한 email이 DB의 members 테이블 있나 확인
     mysqlConnection.query("SELECT * FROM members WHERE email=?", [body.email], (err, rows, fields) => {
 
@@ -312,9 +314,7 @@ router.post('/login', (req, res) => {
                     sess.save(() => {
                         //console.log("로그인", sess)
                     })
-                    res.json(sess)
-
-
+                    return res.json(sess)
 
                 } else {
                     console.log('비밀번호가 일치하지 않습니다')
@@ -338,24 +338,28 @@ router.post('/login', (req, res) => {
 router.get('/api/checksession', (req, res) => {
     sess = req.session;
     if (sess) {
-        res.json(sess)
+        return res.json(sess)
         //console.log("session check", sess)
     }
     // res.sendFile('index.html');
 });
 
 // 로그 아웃
-router.post('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
     sess = req.session;
-    if (sess.email) {
+    console.log('logout: ' , sess)
+    
+    if(sess.email) {
         req.session.destroy(function (err) {
             if (err) {
                 console.log(err);
             } else {
-                res.redirect('/');
+                console.log('logout succeded!!!!!')
+                return res.redirect('/login')
             }
         })
-    } else {
+    }
+     else {
         res.redirect('/');
     }
 })

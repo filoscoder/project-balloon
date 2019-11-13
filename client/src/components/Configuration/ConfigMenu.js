@@ -19,7 +19,7 @@ class ConfigMenu extends React.Component {
         <List>
           {/* MENU 0: App's general preferences */}
           <Link
-            to="/options"
+            to="/config"
             style={{ textDecoration: "none", color: "black" }}
           >
             <ListItem button>
@@ -46,7 +46,7 @@ class ConfigMenu extends React.Component {
           <Divider />
 
           {/* MENU 2: User logout session */}
-          <Link to="/logout" style={{ textDecoration: "none", color: "black" }}>
+          <Link to="/reqlogout" style={{ textDecoration: "none", color: "black" }}>
             <ListItem button>
               <ListItemIcon>
                 <ExitToAppIcon />

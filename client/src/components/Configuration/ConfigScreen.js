@@ -37,14 +37,11 @@ class ConfigScreen extends Component {
           </div>
           <div className="preferences">
             <div className="options">
-              
                 <Switch>
-                  <Route exact path="/" component={Options} />
+                  <Route exact path="/config" component={Options} />
                   <Route path="/passwdchange" component={PasswdChange} />
-                  <Route path="/options" component={Options} />
-                  <Route path="/logout" component={LogOut} />
+                  <Route path="/reqlogout" component={LogOut} />
                 </Switch>
-              
             </div>
           </div>
           </Router>

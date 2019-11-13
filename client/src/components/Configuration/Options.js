@@ -47,6 +47,7 @@ export default function Options() {
         "index: ",
         newChecked.indexOf(value)
       );
+      // DB에서 온 설정
       let arr = ["notification", "project", "chat"];
 
       for (let i = 0; i < newChecked.length; i++) {

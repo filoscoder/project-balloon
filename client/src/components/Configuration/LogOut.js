@@ -5,6 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { Link } from "react-router-dom";
 
 class LogOut extends React.Component {
   constructor(props) {
@@ -15,7 +16,16 @@ class LogOut extends React.Component {
   }
 
   loggedOut = () => {
-    
+    console.log('trying to logout!')
+
+
+    return (fetch('/logout', {
+      method: 'get',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    }));
   };
 
   handleClose = () => {
@@ -43,9 +53,14 @@ class LogOut extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
+          <Link
+            to="/config"
+            style={{ textDecoration: "none", color: "black" }}
+          >
             <Button onClick={this.handleClose} color="secondary">
               취소
             </Button>
+            </Link>
             <Button color="primary" onClick={this.loggedOut}>확인</Button>
           </DialogActions>
         </Dialog>
