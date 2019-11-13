@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## pjt_balloon
 
 ## Quick Start
@@ -21,3 +22,7 @@ npm run client
 # Server runs on http://localhost:5000 and client on http://localhost:3000
 ```
 
+=======
+# project-balloon
+Encore Playdata - Team project
+>>>>>>> 8808a18f8f8c349a2bb278628554f783d57cae24
