@@ -1,14 +1,19 @@
-import React, { Component } from 'react';
-import './configStyle.css'
-import ConfigMenu from './ConfigMenu'
-import Options from './Options'
-import Typography from '@material-ui/core/Typography';
+import React, { Component } from "react";
+import "./configStyle.css";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import ConfigMenu from "./ConfigMenu";
+import Options from "./Options";
+import Typography from "@material-ui/core/Typography";
+import PasswdChange from "./PasswdChange";
+import LogOut from "./LogOut";
 
 class ConfigScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             currentUser: {},
+            selectedMenu: ""
         };
     }
     
@@ -20,23 +25,30 @@ class ConfigScreen extends Component {
     render() {
         return (
             <div className="layout-container">
-                <div className="menu-list">
-                    <div className="menu-top">
-                        <Typography variant="h5">
-                            Settings
-                            </Typography>
-                    </div>
-                    <div className="menu" onClick={(event) => this.handleClick(event)}>
-                        <ConfigMenu />
-                    </div>
-                </div>
-                <div className="preferences">
-                    <div className="options">
-                        <Options />
-                    </div>
-                </div>
-
+            <Router>
+          <div className="menu-list">
+            <div className="menu-top">
+              <Typography variant="h5">Settings</Typography>
             </div>
+            
+            <div className="menu" onClick={event => this.handleClick(event)}>
+              <ConfigMenu />
+            </div>
+          </div>
+          <div className="preferences">
+            <div className="options">
+              
+                <Switch>
+                  <Route exact path="/" component={Options} />
+                  <Route path="/passwdchange" component={PasswdChange} />
+                  <Route path="/options" component={Options} />
+                  <Route path="/logout" component={LogOut} />
+                </Switch>
+              
+            </div>
+          </div>
+          </Router>
+        </div>
         )
     }
 }
